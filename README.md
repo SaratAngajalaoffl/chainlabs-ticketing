@@ -2,6 +2,24 @@
 
 This repo contains a set of smart contracts on the Ethereum blockchain to facilitate the creation, resale, and validation of NFT-based event tickets (digital twins of traditional tickets sold on platforms like Eventbrite).
 
+# Project Setup
+
+## Environment Setup
+
+### Mandatory config variables to set
+
+-   INFURA_KEY
+-   MNEMONIC
+-   ETHERSCAN_API_KEY
+
+Set the environment variables using the below command
+
+```shell
+yarn hardhat vars set INFURA_KEY
+yarn hardhat vars set MNEMONIC
+yarn hardhat vars set ETHERSCAN_API_KEY
+```
+
 ## Basic Commands
 
 ### Run Tests
@@ -22,9 +40,9 @@ REPORT_GAS=true yarn hardhat test
 yarn hardhat run scripts/deploy.ts
 ```
 
-## Design Thought Process
+# Design Thought Process
 
-Initial thoughts
+## Initial thoughts
 
 -   Should tickets for all shows be condensed into a single collection?
 
