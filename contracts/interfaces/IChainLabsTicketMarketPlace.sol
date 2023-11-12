@@ -30,9 +30,10 @@ interface IChainLabsTicketMarketPlace is IERC721Receiver {
 
     struct Pool {
         uint256 headTicketSaleId;
+        uint256 lastTicketSaleId;
         mapping(uint256 => uint256) prevTicketSaleId;
         uint256 numberOfSales;
-        uint256 auction;
+        Auction auction;
     }
 
     /// @notice Emitted when a seller lists a ticket for sale
@@ -55,7 +56,7 @@ interface IChainLabsTicketMarketPlace is IERC721Receiver {
     /// @param bidAmount Amount the bidder is willing to pay per ticket
     event BidPlaced(
         address indexed ticketCollectionAddress,
-        uint256 indexed bidPlacerAddress,
+        address indexed bidPlacerAddress,
         uint256 bidId,
         uint256 quantity,
         uint256 bidAmount
