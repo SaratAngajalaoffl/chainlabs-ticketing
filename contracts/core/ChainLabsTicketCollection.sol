@@ -25,8 +25,9 @@ contract ChainLabsTicketCollection is
     string private baseTokenUri;
     address private factoryAddress;
 
-    uint256 private _idCounter = 0;
+    uint256 private _idCounter = 0; // Counter for NFT ids
 
+    // Object to serialize user signature for transferring NFT
     struct TokenTransferIntent {
         address toAddress;
         uint256 tokenId;
@@ -45,16 +46,23 @@ contract ChainLabsTicketCollection is
         showStartTimeStamp = _showStartTimeStamp;
         maxSupply = _maxSupply;
         baseTokenUri = _baseTokenUri;
+        factoryAddress = _msg.sender;
     }
 
-    error InvalidPrice(uint256 paidAmount, uint256 price);
-    error HouseFull();
-    error ShowExpired();
+    error InvalidPrice(uint256 paidAmount, uint256 price); // Error for when paid amount doesn't match the specified price
+    error HouseFull(); // Error for when all the tickets have been sold
+    error ShowExpired(); // Error for when the show has already started
 
+    /// @notice Required override to set a custom base token uri
+    /// @return string Base IPFS link that contains individual files with NFT Metadata
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenUri;
     }
 
+    /// @dev generates a digest for the token transfer intent object to be verified against the signature
+    /// @param toAddress Recepient address for the NFT
+    /// @param tokenId Id of the NFT the user wishes to transfer
+    /// @return digest bytes32 digest data to be verified against the user provided signature
     function _getDigest(
         address toAddress,
         uint256 tokenId
