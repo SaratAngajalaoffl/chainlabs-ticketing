@@ -41,9 +41,10 @@ struct Auction {
 ```solidity
 struct Pool {
   uint256 headTicketSaleId;
+  uint256 lastTicketSaleId;
   mapping(uint256 => uint256) prevTicketSaleId;
   uint256 numberOfSales;
-  uint256 auction;
+  struct IChainLabsTicketMarketPlace.Auction auction;
 }
 ```
 
@@ -67,7 +68,7 @@ Emitted when a seller lists a ticket for sale
 ### BidPlaced
 
 ```solidity
-event BidPlaced(address ticketCollectionAddress, uint256 bidPlacerAddress, uint256 bidId, uint256 quantity, uint256 bidAmount)
+event BidPlaced(address ticketCollectionAddress, address bidPlacerAddress, uint256 bidId, uint256 quantity, uint256 bidAmount)
 ```
 
 Emitted when a potential buyer places a bid
@@ -77,7 +78,7 @@ Emitted when a potential buyer places a bid
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | ticketCollectionAddress | address | Address of the assossiated ticketCollection |
-| bidPlacerAddress | uint256 | Address that places that bid |
+| bidPlacerAddress | address | Address that places that bid |
 | bidId | uint256 | Id of the newly placed bid |
 | quantity | uint256 | Number of tickets the user wants to buy |
 | bidAmount | uint256 | Amount the bidder is willing to pay per ticket |

@@ -23,6 +23,9 @@ contract ChainLabsTicketMarketPlace is IChainLabsTicketMarketPlace {
     error IncorrectPaymentAmount();
     error NoSalesAvailable();
 
+    /// @notice Verifies if the specified amount of time has elapsed since the last sale and updates the storage for auction winner to claim his tickets
+    /// @param ticketContractAddress Address of the ticket collection contract the buyer wants to place a bid on
+    /// @return hasNewWinner Boolean value indicating if a new winner has been declared or not
     function _verifyBidFullfillment(
         address ticketContractAddress
     ) internal returns (bool) {
