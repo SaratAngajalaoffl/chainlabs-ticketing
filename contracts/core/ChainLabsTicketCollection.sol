@@ -46,7 +46,7 @@ contract ChainLabsTicketCollection is
         showStartTimeStamp = _showStartTimeStamp;
         maxSupply = _maxSupply;
         baseTokenUri = _baseTokenUri;
-        factoryAddress = _msg.sender;
+        factoryAddress = msg.sender;
     }
 
     error InvalidPrice(uint256 paidAmount, uint256 price); // Error for when paid amount doesn't match the specified price
