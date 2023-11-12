@@ -53,6 +53,11 @@ contract ChainLabsTicketFactory is IChainLabsTicketFactory {
         );
     }
 
+    /// @notice Aggregates logs from all ticket collection contracts
+    /// @dev Can only be initiated from ticket collection contracts deployed from this factory
+    /// @param fromAddress Owner of the token pre-transfer, null address when minting
+    /// @param toAddress Owner of the token post-transfer, null address when burning
+    /// @param tokenId Id of the token being transferred
     function logTransfer(
         address fromAddress,
         address toAddress,

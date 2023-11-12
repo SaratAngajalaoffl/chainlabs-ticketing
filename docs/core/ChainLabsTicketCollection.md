@@ -63,15 +63,48 @@ error ShowExpired()
 function _baseURI() internal view virtual returns (string)
 ```
 
-_Base URI for computing {tokenURI}. If set, the resulting URI for each
-token will be the concatenation of the `baseURI` and the `tokenId`. Empty
-by default, can be overridden in child contracts._
+Required override to set a custom base token uri
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | string | string Base IPFS link that contains individual files with NFT Metadata |
+
+### _update
+
+```solidity
+function _update(address to, uint256 tokenId, address auth) internal virtual returns (address from)
+```
+
+override to call the log function on factory contract to aggregate logs
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| from | address | address of the owner pre-transfer |
 
 ### _getDigest
 
 ```solidity
 function _getDigest(address toAddress, uint256 tokenId) internal view returns (bytes32)
 ```
+
+_generates a digest for the token transfer intent object to be verified against the signature_
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| toAddress | address | Recepient address for the NFT |
+| tokenId | uint256 | Id of the NFT the user wishes to transfer |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32 | digest bytes32 digest data to be verified against the user provided signature |
 
 ### mintTicket
 

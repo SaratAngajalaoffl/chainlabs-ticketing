@@ -60,6 +60,8 @@ contract ChainLabsTicketCollection is
         return baseTokenUri;
     }
 
+    /// @notice override to call the log function on factory contract to aggregate logs
+    /// @return from address of the owner pre-transfer
     function _update(
         address to,
         uint256 tokenId,
