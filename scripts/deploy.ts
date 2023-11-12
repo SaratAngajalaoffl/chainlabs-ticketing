@@ -56,7 +56,20 @@ const main = async () => {
     BASE_TOKEN_URI,
   ].join(" ");
 
-  const verificationCommand = `yarn hardhat verify --network sepolia ${ticketFactoryAddress} \n\
+  const marketContract = await ethers.deployContract(
+    "ChainLabsTicketMarketPlace"
+  );
+
+  console.log("Deploying ChainLabsTicketMarketPlace");
+
+  await marketContract.waitForDeployment();
+
+  const marketContractAddress = await marketContract.getAddress();
+
+  console.log(`ChainLabsTicketMarketPlace: ${marketContractAddress}`);
+
+  const verificationCommand = `yarn hardhat verify --network sepolia ${marketContractAddress} \n\
+  yarn hardhat verify --network sepolia ${ticketFactoryAddress} \n\
 	 yarn hardhat verify --network sepolia ${ticketCollectionAddress} ${ticketCollectionArgs}`;
 
   console.log(`Running script to verify contracts`);
