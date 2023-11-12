@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 import "../interfaces/IChainLabsTicketCollection.sol";
+import "./ChainLabsTicketFactory.sol";
 
 /// @title ChainLabsTicketCollection
 /// @author Sarat Angajala @mugiwaraa_eth
@@ -57,6 +58,15 @@ contract ChainLabsTicketCollection is
     /// @return string Base IPFS link that contains individual files with NFT Metadata
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenUri;
+    }
+
+    function _update(
+        address to,
+        uint256 tokenId,
+        address auth
+    ) internal virtual override returns (address from) {
+        from = super._update(to, tokenId, auth);
+        ChainLabsTicketFactory(factoryAddress).logTransfer(from, to, tokenId);
     }
 
     /// @dev generates a digest for the token transfer intent object to be verified against the signature

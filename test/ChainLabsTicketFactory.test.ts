@@ -1,6 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { ChainLabsTicketCollection } from "../typechain-types";
 
 const NAME = "TICKET";
 const SYMBOL = "TKT";
@@ -28,7 +29,7 @@ describe("ChainLabsTicketFactory", () => {
   });
 
   describe("when creating new ticket collection", () => {
-    it("should emit an event", async () => {
+    it("should emit ticket collection creation event", async () => {
       const { owner, contract } = await loadFixture(
         deployChainLabsTicketFactory
       );
@@ -49,7 +50,7 @@ describe("ChainLabsTicketFactory", () => {
 
   describe("when logging a ticket transfer", () => {
     describe("when the address trying to log isn't a ticket collection", () => {
-      it("should throw an error", async () => {
+      it("should throw ERC721NotSupported error", async () => {
         const { owner, otherAccount, contract } = await loadFixture(
           deployChainLabsTicketFactory
         );
@@ -57,6 +58,50 @@ describe("ChainLabsTicketFactory", () => {
         await expect(
           contract.logTransfer(owner.address, otherAccount.address, 0)
         ).to.revertedWithCustomError(contract, "ERC721NotSupported");
+      });
+    });
+
+    describe("when the address trying to log is a ticket collection", () => {
+      it("should emit the transfer event", async () => {
+        const { owner, otherAccount, contract } = await loadFixture(
+          deployChainLabsTicketFactory
+        );
+
+        await contract.createTicketCollection(
+          owner.address,
+          PRICE,
+          SHOW_START_TIME,
+          MAX_SUPPLY,
+          NAME,
+          SYMBOL,
+          BASE_TOKEN_URI
+        );
+
+        // get deployed contract address from emitted event
+        const filter = contract.filters.TicketCollectionCreated;
+        const [event] = await contract.queryFilter(filter, -1);
+        const ticketContractAddress = event.args.ticketCollectionAddress;
+
+        // Setup `ChainLabsTicketCollection` from the address
+        const collectionFactory = await ethers.getContractFactory(
+          "ChainLabsTicketCollection"
+        );
+        const ticketContract: ChainLabsTicketCollection = new ethers.Contract(
+          ticketContractAddress,
+          collectionFactory.interface,
+          collectionFactory.runner
+        ) as any;
+
+        expect(
+          ticketContract.mintTicket(otherAccount.address, { value: PRICE })
+        )
+          .to.emit(contract, "TicketTransferred")
+          .withArgs(
+            ticketContractAddress,
+            ethers.ZeroAddress,
+            otherAccount.address,
+            0
+          );
       });
     });
   });

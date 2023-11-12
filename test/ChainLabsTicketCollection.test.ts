@@ -4,6 +4,7 @@ import {
 } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
+import { ChainLabsTicketCollection } from "../typechain-types";
 
 const NAME = "TICKET";
 const SYMBOL = "TKT";
@@ -25,18 +26,36 @@ describe("ChainLabsTicketCollection", () => {
   const deployChainLabsTicketCollection = async () => {
     let [owner, otherAccount] = await ethers.getSigners();
 
+    const factoryContract = await ethers.deployContract(
+      "ChainLabsTicketFactory"
+    );
+
     const OWNER = owner.address;
 
-    // deploy ticket collection contract with correct arguments
-    const contract = await ethers.deployContract("ChainLabsTicketCollection", [
-      NAME,
-      SYMBOL,
+    await factoryContract.createTicketCollection(
       OWNER,
       PRICE,
       SHOW_START_TIME,
       MAX_SUPPLY,
-      BASE_TOKEN_URI,
-    ]);
+      NAME,
+      SYMBOL,
+      BASE_TOKEN_URI
+    );
+
+    // get deployed contract address from emitted event
+    const filter = factoryContract.filters.TicketCollectionCreated;
+    const [event] = await factoryContract.queryFilter(filter, -1);
+    const contractAddress = event.args.ticketCollectionAddress;
+
+    // Setup `ChainLabsTicketCollection` from the address
+    const collectionFactory = await ethers.getContractFactory(
+      "ChainLabsTicketCollection"
+    );
+    const contract: ChainLabsTicketCollection = new ethers.Contract(
+      contractAddress,
+      collectionFactory.interface,
+      collectionFactory.runner
+    ) as any;
 
     return { owner, otherAccount, contract };
   };
