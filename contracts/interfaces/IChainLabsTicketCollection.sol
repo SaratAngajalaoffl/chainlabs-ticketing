@@ -1,4 +1,4 @@
-// interfaces/IChainLinkTicketCollection.sol
+// interfaces/IChainLabsTicketCollection.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -6,11 +6,11 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-/// @title Interface for `ChainLinkTicketCollection` Contract
+/// @title Interface for `ChainLabsTicketCollection` Contract
 /// @author Sarat Angajala @mugiwaraa_eth
 /// @notice NFT collection where each token represents a physical ticket
 /// @dev Intended to be deployed from the ChainLabsTicketFactory contract
-interface IChainLinkTicketCollection is IERC721 {
+interface IChainLabsTicketCollection is IERC721 {
     /// @notice Call this function to mint a new NFT
     /// @dev Checks the amount paid, has available supply and show has not started yet before minting the token
     /// @param toAddress Recepient address for the ticket NFT
