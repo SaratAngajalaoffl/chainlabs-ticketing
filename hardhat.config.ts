@@ -6,7 +6,7 @@ const MNEMONIC = vars.get('MNEMONIC');
 const ETHERSCAN_API_KEY = vars.get('ETHERSCAN_API_KEY');
 
 const config: HardhatUserConfig = {
-	solidity: '0.8.19',
+	solidity: '0.8.20',
 	networks: {
 		sepolia: {
 			url: `https://sepolia.infura.io/v3/${INFURA_KEY}`,
