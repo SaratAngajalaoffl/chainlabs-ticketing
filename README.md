@@ -67,7 +67,8 @@ yarn hardhat run scripts/deploy.ts
 yarn hardhat run scripts/deploy.ts --network sepolia
 ```
 
-# Deployment Addresses
+# Sepolia Deployment Addresses
 
-ChainLabsTicketFactory: [0x73F6581CB490c46Fd0F707bf4690C66950D87F9A](https://sepolia.etherscan.io/address/0x73F6581CB490c46Fd0F707bf4690C66950D87F9A)
-ChainLabsTicketCollection: [0x890391925F1A66DC2457976fD2D260E835A1080C](https://sepolia.etherscan.io/address/0x890391925F1A66DC2457976fD2D260E835A1080C)
+ChainLabsTicketFactory: [0xB51bEd2619C1D81A11c1be8F7b14C68F25AeBD81](https://sepolia.etherscan.io/address/0xB51bEd2619C1D81A11c1be8F7b14C68F25AeBD81)
+ChainLabsTicketCollection: [0x2732eB29CeB4B4946Fc425371ea68B7c96F96038](https://sepolia.etherscan.io/address/0x2732eB29CeB4B4946Fc425371ea68B7c96F96038)
+ChainLabsTicketMarketPlace: [0xb0B1559b06fFAB7D9455109e39d6793A76FDF506](https://sepolia.etherscan.io/address/0xb0B1559b06fFAB7D9455109e39d6793A76FDF506)
